@@ -32,6 +32,21 @@ app.get("/students", async (request, response) => {
   });
 });
 
+app.use(express.json());
+
+app.post("/students", async (request, response) => {
+  const studentInfo = request.body;
+
+  const newStrudent = await Student.create(studentInfo);
+
+  response.json({
+    success: true,
+    data: {
+      student: newStrudent,
+    },
+  });
+});
+
 mongoose.connect(
   process.env.DATEBASE,
   {
