@@ -47,6 +47,27 @@ app.post("/students", async (request, response) => {
   });
 });
 
+app.delete("/students/:id", async (request, response) => {
+  try {
+    const id = request.params.id;
+
+    const studentDeleted = await Student.findByIdAndDelete(id);
+
+    response.json({
+      success: true,
+      data: {
+        student: studentDeleted,
+      },
+    });
+  } catch (error) {
+    response.status(400);
+    response.json({
+      sucess: false,
+      error: error.message,
+    });
+  }
+});
+
 mongoose.connect(
   process.env.DATEBASE,
   {
